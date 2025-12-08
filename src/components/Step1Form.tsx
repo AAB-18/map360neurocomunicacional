@@ -19,12 +19,11 @@ export const Step1Form = ({ data, onChange, onNext }: Step1FormProps) => {
         <img 
           src={tutorsTechLogo} 
           alt="Tutor's Tech Logo" 
-          className="h-20 mx-auto mb-6"
+          className="w-[512px] h-[512px] mx-auto mb-6 object-contain"
         />
         <h1 className="text-3xl md:text-4xl font-extrabold mb-2">
           <span className="text-foreground">Qual é o seu Estilo de Carisma </span>
-          <span className="text-primary neon-text">Mapeamento</span>{" "}
-          <span className="text-foreground">Neurocomunicacional</span>
+          <span className="text-primary neon-text">Mapeamento Neurocomportamental</span>
           <span className="text-primary">?</span>
         </h1>
         <p className="text-muted-foreground mt-4">
