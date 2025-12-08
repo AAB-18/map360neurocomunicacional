@@ -19,7 +19,7 @@ export const Step1Form = ({ data, onChange, onNext }: Step1FormProps) => {
         <img 
           src={tutorsTechLogo} 
           alt="Tutor's Tech Logo" 
-          className="w-[512px] h-[512px] mx-auto mb-6 object-contain"
+          className="w-[300px] h-[300px] mx-auto mb-6 object-contain"
         />
         <h1 className="text-3xl md:text-4xl font-extrabold mb-2">
           <span className="text-foreground">Qual é o seu Estilo de Carisma </span>
