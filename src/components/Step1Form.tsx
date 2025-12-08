@@ -1,6 +1,7 @@
 import { ChevronRight, Lock } from "lucide-react";
 import { NeonButton } from "./NeonButton";
 import { FormData } from "@/data/charismaData";
+import tutorsTechLogo from "@/assets/tutors-tech-logo.jpeg";
 
 interface Step1FormProps {
   data: FormData;
@@ -15,10 +16,16 @@ export const Step1Form = ({ data, onChange, onNext }: Step1FormProps) => {
   return (
     <div className="space-y-6 animate-fadeIn">
       <div className="text-center mb-8">
+        <img 
+          src={tutorsTechLogo} 
+          alt="Tutor's Tech Logo" 
+          className="h-20 mx-auto mb-6"
+        />
         <h1 className="text-3xl md:text-4xl font-extrabold mb-2">
           <span className="text-foreground">Qual é o seu Estilo de Carisma </span>
-          <span className="text-primary neon-text">Neurocomunicacional</span>
-          <span className="text-foreground">?</span>
+          <span className="text-primary neon-text">Mapeamento</span>{" "}
+          <span className="text-foreground">Neurocomunicacional</span>
+          <span className="text-primary">?</span>
         </h1>
         <p className="text-muted-foreground mt-4">
           Descubra como seu cérebro influencia sua presença, impacto e poder de conexão.
