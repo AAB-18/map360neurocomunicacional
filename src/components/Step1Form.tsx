@@ -23,7 +23,7 @@ export const Step1Form = ({ data, onChange, onNext }: Step1FormProps) => {
         />
         <h1 className="text-3xl md:text-4xl font-extrabold mb-2">
           <span className="text-foreground">Qual é o seu Estilo de Carisma </span>
-          <span className="text-primary neon-text">Mapeamento Neurocomportamental</span>
+          <span className="text-primary neon-text">Mapeamento Neurocomunicacional</span>
           <span className="text-primary">?</span>
         </h1>
         <p className="text-muted-foreground mt-4">
