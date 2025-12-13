@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Brain, Activity, Send } from "lucide-react";
+import { Brain, Activity, Send, Lightbulb, Users, AlertTriangle, Target, Star, MessageCircle, Briefcase } from "lucide-react";
 import { NeonButton } from "./NeonButton";
 import { CharismaResult, FormData } from "@/data/charismaData";
 
@@ -35,18 +35,19 @@ export const Step4Result = ({ result, formData, onReset }: Step4ResultProps) => 
   };
 
   return (
-    <div className="space-y-8 animate-fadeIn text-center">
+    <div className="space-y-8 animate-fadeIn">
       {showConfetti && (
         <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center opacity-20">
           <div className="w-full h-full bg-glow-red animate-pulse"></div>
         </div>
       )}
 
-      <div className="inline-block p-4 rounded-full bg-muted border-2 border-primary neon-border-strong mb-4">
-        <Brain size={48} className="text-primary" />
-      </div>
+      {/* Header */}
+      <div className="text-center">
+        <div className="inline-block p-4 rounded-full bg-muted border-2 border-primary neon-border-strong mb-4">
+          <Brain size={48} className="text-primary" />
+        </div>
 
-      <div>
         <h2 className="text-sm text-muted-foreground uppercase tracking-widest mb-2">
           Seu Estilo Predominante é
         </h2>
@@ -55,28 +56,101 @@ export const Step4Result = ({ result, formData, onReset }: Step4ResultProps) => 
         </h1>
       </div>
 
+      {/* Description Card */}
       <div className="bg-muted/80 border border-border p-8 rounded-xl relative overflow-hidden group hover:border-primary/50 transition-colors">
         <div className="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+        <p className="text-xl text-foreground italic">"{result.description}"</p>
+      </div>
 
-        <p className="text-xl text-foreground italic mb-6">"{result.description}"</p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mt-8">
-          <div className="bg-background/50 p-4 rounded border border-border">
-            <h4 className="flex items-center text-primary font-bold mb-2">
-              <Activity className="w-4 h-4 mr-2" /> Ponto Forte
-            </h4>
-            <p className="text-foreground/80">{result.strength}</p>
-          </div>
-          <div className="bg-background/50 p-4 rounded border border-border">
-            <h4 className="flex items-center text-primary font-bold mb-2">
-              <Brain className="w-4 h-4 mr-2" /> Cérebro Dominante
-            </h4>
-            <p className="text-foreground/80">{result.brain}</p>
-          </div>
+      {/* Main Info Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-muted/80 p-5 rounded-xl border border-border hover:border-primary/50 transition-colors">
+          <h4 className="flex items-center text-primary font-bold mb-3">
+            <Activity className="w-5 h-5 mr-2" /> Ponto Forte
+          </h4>
+          <p className="text-foreground/90">{result.strength}</p>
+        </div>
+        <div className="bg-muted/80 p-5 rounded-xl border border-border hover:border-primary/50 transition-colors">
+          <h4 className="flex items-center text-primary font-bold mb-3">
+            <Brain className="w-5 h-5 mr-2" /> Cérebro Dominante
+          </h4>
+          <p className="text-foreground/90">{result.brain}</p>
         </div>
       </div>
 
-      <div className="space-y-3 pt-6">
+      {/* Characteristics */}
+      <div className="bg-muted/80 p-6 rounded-xl border border-border">
+        <h4 className="flex items-center text-primary font-bold mb-4 text-lg">
+          <Star className="w-5 h-5 mr-2" /> Características Principais
+        </h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {result.characteristics.map((char, index) => (
+            <div key={index} className="flex items-center bg-background/50 p-3 rounded-lg border border-border/50">
+              <div className="w-2 h-2 bg-primary rounded-full mr-3 flex-shrink-0"></div>
+              <span className="text-foreground/90 text-sm">{char}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Communication Style */}
+      <div className="bg-muted/80 p-6 rounded-xl border border-border">
+        <h4 className="flex items-center text-primary font-bold mb-4 text-lg">
+          <MessageCircle className="w-5 h-5 mr-2" /> Estilo de Comunicação
+        </h4>
+        <p className="text-foreground/90 leading-relaxed">{result.communicationStyle}</p>
+      </div>
+
+      {/* Ideal Environment */}
+      <div className="bg-muted/80 p-6 rounded-xl border border-border">
+        <h4 className="flex items-center text-primary font-bold mb-4 text-lg">
+          <Briefcase className="w-5 h-5 mr-2" /> Ambiente Ideal
+        </h4>
+        <p className="text-foreground/90 leading-relaxed">{result.idealEnvironment}</p>
+      </div>
+
+      {/* Challenges */}
+      <div className="bg-muted/80 p-6 rounded-xl border border-border border-l-4 border-l-yellow-500">
+        <h4 className="flex items-center text-yellow-500 font-bold mb-4 text-lg">
+          <AlertTriangle className="w-5 h-5 mr-2" /> Pontos de Atenção
+        </h4>
+        <p className="text-foreground/90 leading-relaxed">{result.challenges}</p>
+      </div>
+
+      {/* Development Tips */}
+      <div className="bg-muted/80 p-6 rounded-xl border border-border">
+        <h4 className="flex items-center text-primary font-bold mb-4 text-lg">
+          <Target className="w-5 h-5 mr-2" /> Dicas de Desenvolvimento
+        </h4>
+        <div className="space-y-3">
+          {result.developmentTips.map((tip, index) => (
+            <div key={index} className="flex items-start bg-background/50 p-3 rounded-lg border border-border/50">
+              <Lightbulb className="w-4 h-4 text-primary mr-3 mt-0.5 flex-shrink-0" />
+              <span className="text-foreground/90 text-sm">{tip}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Famous Examples */}
+      <div className="bg-muted/80 p-6 rounded-xl border border-border">
+        <h4 className="flex items-center text-primary font-bold mb-4 text-lg">
+          <Users className="w-5 h-5 mr-2" /> Personalidades com este Carisma
+        </h4>
+        <div className="flex flex-wrap gap-3">
+          {result.famousExamples.map((example, index) => (
+            <span 
+              key={index} 
+              className="bg-primary/20 text-primary px-4 py-2 rounded-full text-sm font-medium border border-primary/30"
+            >
+              {example}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* CTA */}
+      <div className="space-y-3 pt-6 text-center">
         <p className="text-sm text-muted-foreground mb-4">
           Clique abaixo para enviar o resultado e finalizar:
         </p>
