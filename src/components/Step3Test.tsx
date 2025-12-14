@@ -4,11 +4,12 @@ import { QUESTIONS, CharismaType } from "@/data/charismaData";
 
 interface Step3TestProps {
   answers: Record<number, CharismaType>;
-  onAnswer: (questionId: number, type: CharismaType) => void;
+  selectedOptions: Record<number, number>;
+  onAnswer: (questionId: number, type: CharismaType, optionIndex: number) => void;
   onFinish: () => void;
 }
 
-export const Step3Test = ({ answers, onAnswer, onFinish }: Step3TestProps) => {
+export const Step3Test = ({ answers, selectedOptions, onAnswer, onFinish }: Step3TestProps) => {
   const allAnswered = Object.keys(answers).length === QUESTIONS.length;
   const answeredCount = Object.keys(answers).length;
   const progress = (answeredCount / QUESTIONS.length) * 100;
@@ -47,11 +48,11 @@ export const Step3Test = ({ answers, onAnswer, onFinish }: Step3TestProps) => {
             </h3>
             <div className="grid grid-cols-1 gap-3 pl-8">
               {q.options.map((opt, idx) => {
-                const isSelected = answers[q.id] === opt.type;
+                const isSelected = selectedOptions[q.id] === idx;
                 return (
                   <button
                     key={idx}
-                    onClick={() => onAnswer(q.id, opt.type)}
+                    onClick={() => onAnswer(q.id, opt.type, idx)}
                     className={`
                       text-left p-4 rounded-lg text-sm transition-all duration-200 border
                       ${

@@ -16,6 +16,7 @@ const Index = () => {
     lgpd: false,
   });
   const [answers, setAnswers] = useState<Record<number, CharismaType>>({});
+  const [selectedOptions, setSelectedOptions] = useState<Record<number, number>>({});
   const [finalResult, setFinalResult] = useState<CharismaResult | null>(null);
   const [scores, setScores] = useState<ProfileScores>({ S: 0, R: 0, V: 0, P: 0 });
 
@@ -23,8 +24,9 @@ const Index = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleAnswer = (questionId: number, type: CharismaType) => {
+  const handleAnswer = (questionId: number, type: CharismaType, optionIndex: number) => {
     setAnswers((prev) => ({ ...prev, [questionId]: type }));
+    setSelectedOptions((prev) => ({ ...prev, [questionId]: optionIndex }));
   };
 
   const calculateResult = () => {
@@ -52,6 +54,7 @@ const Index = () => {
       lgpd: false,
     });
     setAnswers({});
+    setSelectedOptions({});
     setFinalResult(null);
     setScores({ S: 0, R: 0, V: 0, P: 0 });
     window.scrollTo(0, 0);
@@ -87,7 +90,12 @@ const Index = () => {
         )}
 
         {step === 3 && (
-          <Step3Test answers={answers} onAnswer={handleAnswer} onFinish={calculateResult} />
+          <Step3Test 
+            answers={answers} 
+            selectedOptions={selectedOptions}
+            onAnswer={handleAnswer} 
+            onFinish={calculateResult} 
+          />
         )}
 
         {step === 4 && finalResult && (
