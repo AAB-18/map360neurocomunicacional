@@ -1,20 +1,25 @@
 import { useState, useEffect } from "react";
-import { Brain, Activity, Send, Lightbulb, Users, AlertTriangle, Target, Star, MessageCircle, Briefcase } from "lucide-react";
+import { Brain } from "lucide-react";
+import { Activity, Send, Lightbulb, Users, AlertTriangle, Target, Star, MessageCircle, Briefcase } from "lucide-react";
 import { NeonButton } from "./NeonButton";
 import { ProfileRadarChart } from "./ProfileRadarChart";
 import { CharismaResult, FormData, ProfileScores } from "@/data/charismaData";
 
-// Import images
+// Import charisma symbol images
 import carismaSensivel from "@/assets/carisma-sensivel.png";
 import carismaRacional from "@/assets/carisma-racional.png";
 import carismaVibrante from "@/assets/carisma-vibrante.png";
 import carismaSereno from "@/assets/carisma-sereno.png";
+import carismaEstrategico from "@/assets/carisma-estrategico.png";
+import carismaProfundo from "@/assets/carisma-profundo.png";
 
 const imageMap: Record<string, string> = {
   'carisma-sensivel': carismaSensivel,
   'carisma-racional': carismaRacional,
   'carisma-vibrante': carismaVibrante,
   'carisma-sereno': carismaSereno,
+  'carisma-estrategico': carismaEstrategico,
+  'carisma-profundo': carismaProfundo,
 };
 
 interface Step4ResultProps {
@@ -134,11 +139,17 @@ _www.tutorstech.com.br_`;
         </div>
       )}
 
-      {/* Header */}
+      {/* Header with Symbol */}
       <div className="text-center">
-        <div className="inline-block p-4 rounded-full bg-muted border-2 border-primary neon-border-strong mb-4">
-          <Brain size={48} className="text-primary" />
-        </div>
+        {personalityImage && (
+          <div className="mb-6">
+            <img 
+              src={personalityImage} 
+              alt={result.title}
+              className="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-2xl shadow-lg border-2 border-primary/30 object-cover"
+            />
+          </div>
+        )}
 
         <h2 className="text-sm text-muted-foreground uppercase tracking-widest mb-2">
           Seu Estilo Predominante é
