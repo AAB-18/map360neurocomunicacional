@@ -1,15 +1,30 @@
 import { useState, useEffect } from "react";
-import { Brain, Activity, Send, Lightbulb, Users, AlertTriangle, Target, Star, MessageCircle, Briefcase } from "lucide-react";
+import { Brain, Activity, Send, Lightbulb, Users, AlertTriangle, Target, Star, MessageCircle, Briefcase, Share2 } from "lucide-react";
 import { NeonButton } from "./NeonButton";
-import { CharismaResult, FormData } from "@/data/charismaData";
+import { ProfileRadarChart } from "./ProfileRadarChart";
+import { CharismaResult, FormData, ProfileScores } from "@/data/charismaData";
+
+// Import images
+import carismaSensivel from "@/assets/carisma-sensivel.png";
+import carismaRacional from "@/assets/carisma-racional.png";
+import carismaVibrante from "@/assets/carisma-vibrante.png";
+import carismaSereno from "@/assets/carisma-sereno.png";
+
+const imageMap: Record<string, string> = {
+  'carisma-sensivel': carismaSensivel,
+  'carisma-racional': carismaRacional,
+  'carisma-vibrante': carismaVibrante,
+  'carisma-sereno': carismaSereno,
+};
 
 interface Step4ResultProps {
   result: CharismaResult;
   formData: FormData;
+  scores: ProfileScores;
   onReset: () => void;
 }
 
-export const Step4Result = ({ result, formData, onReset }: Step4ResultProps) => {
+export const Step4Result = ({ result, formData, scores, onReset }: Step4ResultProps) => {
   const [showConfetti, setShowConfetti] = useState(true);
 
   useEffect(() => {
@@ -23,16 +38,93 @@ export const Step4Result = ({ result, formData, onReset }: Step4ResultProps) => 
     return `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodedText}`;
   };
 
-  const resultText = `Olá! Meu nome é *${formData.name}* (${formData.profession}).\n\nAcabei de realizar o teste de Carisma Neurocomunicacional.\n\n🏆 *MEU RESULTADO: ${result.title}*\n\n🧠 *Cérebro Dominante:* ${result.brain}\n💪 *Ponto Forte:* ${result.strength}\n\nContato do usuário: ${formData.whatsapp}`;
+  const generateFullReport = () => {
+    return `🧠 *RELATÓRIO COMPLETO - MAPEAMENTO NEUROCOMUNICACIONAL*
+
+👤 *DADOS DO PARTICIPANTE*
+• Nome: ${formData.name}
+• Profissão: ${formData.profession}
+• Escolaridade: ${formData.education}
+• Contato: ${formData.whatsapp}
+• Email: ${formData.email}
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+🏆 *RESULTADO: ${result.title}*
+
+📊 *PONTUAÇÃO POR DIMENSÃO*
+• Sensível-Empático: ${scores.S} pontos
+• Neuroracional: ${scores.R} pontos
+• Vibrante-Entusiasmado: ${scores.V} pontos
+• Sereno-Profundo: ${scores.P} pontos
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 *DESCRIÇÃO DO PERFIL*
+"${result.description}"
+
+🧠 *Cérebro Dominante:* ${result.brain}
+💪 *Ponto Forte:* ${result.strength}
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+⭐ *CARACTERÍSTICAS PRINCIPAIS*
+${result.characteristics.map(c => `• ${c}`).join('\n')}
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+💬 *ESTILO DE COMUNICAÇÃO*
+${result.communicationStyle}
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+🏢 *AMBIENTE IDEAL*
+${result.idealEnvironment}
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ *PONTOS DE ATENÇÃO*
+${result.challenges}
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 *DICAS DE DESENVOLVIMENTO*
+${result.developmentTips.map(t => `• ${t}`).join('\n')}
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+👥 *PERSONALIDADES COM ESTE CARISMA*
+${result.famousExamples.join(', ')}
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+_Mapeamento realizado pela Tutor's Tech_
+_www.tutorstech.com.br_`;
+  };
 
   const adminPhone = "5511985870689";
+  const userPhone = formData.whatsapp;
+  const fullReport = generateFullReport();
 
-  const handleSendAndReset = () => {
-    window.open(getWhatsAppLink(adminPhone, resultText), "_blank");
+  const handleSendToAdmin = () => {
+    window.open(getWhatsAppLink(adminPhone, fullReport), "_blank");
+  };
+
+  const handleSendToUser = () => {
+    window.open(getWhatsAppLink(userPhone, fullReport), "_blank");
+  };
+
+  const handleSendBoth = () => {
+    handleSendToAdmin();
+    setTimeout(() => {
+      handleSendToUser();
+    }, 1500);
     setTimeout(() => {
       onReset();
-    }, 1000);
+    }, 3000);
   };
+
+  const personalityImage = imageMap[result.image];
 
   return (
     <div className="space-y-8 animate-fadeIn">
@@ -42,8 +134,18 @@ export const Step4Result = ({ result, formData, onReset }: Step4ResultProps) => 
         </div>
       )}
 
-      {/* Header */}
+      {/* Header with Image */}
       <div className="text-center">
+        {personalityImage && (
+          <div className="mb-6">
+            <img 
+              src={personalityImage} 
+              alt={result.title}
+              className="w-48 h-48 mx-auto rounded-full border-4 border-primary shadow-lg shadow-primary/30"
+            />
+          </div>
+        )}
+
         <div className="inline-block p-4 rounded-full bg-muted border-2 border-primary neon-border-strong mb-4">
           <Brain size={48} className="text-primary" />
         </div>
@@ -54,6 +156,32 @@ export const Step4Result = ({ result, formData, onReset }: Step4ResultProps) => 
         <h1 className="text-3xl md:text-5xl font-extrabold text-foreground drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
           {result.title}
         </h1>
+      </div>
+
+      {/* Radar Chart */}
+      <div className="bg-muted/80 border border-border p-6 rounded-xl">
+        <h4 className="text-center text-primary font-bold mb-4 text-lg">
+          Seu Perfil Neurocomunicacional
+        </h4>
+        <ProfileRadarChart scores={scores} />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-4 text-center">
+          <div className="bg-background/50 p-2 rounded-lg">
+            <div className="text-primary font-bold text-lg">{scores.S}</div>
+            <div className="text-xs text-muted-foreground">Sensível</div>
+          </div>
+          <div className="bg-background/50 p-2 rounded-lg">
+            <div className="text-primary font-bold text-lg">{scores.R}</div>
+            <div className="text-xs text-muted-foreground">Racional</div>
+          </div>
+          <div className="bg-background/50 p-2 rounded-lg">
+            <div className="text-primary font-bold text-lg">{scores.V}</div>
+            <div className="text-xs text-muted-foreground">Vibrante</div>
+          </div>
+          <div className="bg-background/50 p-2 rounded-lg">
+            <div className="text-primary font-bold text-lg">{scores.P}</div>
+            <div className="text-xs text-muted-foreground">Sereno</div>
+          </div>
+        </div>
       </div>
 
       {/* Description Card */}
@@ -149,17 +277,42 @@ export const Step4Result = ({ result, formData, onReset }: Step4ResultProps) => 
         </div>
       </div>
 
-      {/* CTA */}
-      <div className="space-y-3 pt-6 text-center">
-        <p className="text-sm text-muted-foreground mb-4">
-          Clique abaixo para enviar o resultado e finalizar:
-        </p>
+      {/* WhatsApp Send Options */}
+      <div className="space-y-4 pt-6">
+        <div className="text-center">
+          <h4 className="text-primary font-bold text-lg mb-2">
+            <Share2 className="w-5 h-5 inline mr-2" />
+            Enviar Relatório Completo
+          </h4>
+          <p className="text-sm text-muted-foreground mb-6">
+            Envie seu relatório detalhado por WhatsApp
+          </p>
+        </div>
 
-        <NeonButton onClick={handleSendAndReset}>
-          <span className="flex items-center justify-center">
-            ENVIAR RESULTADO <Send className="ml-2 w-4 h-4" />
-          </span>
-        </NeonButton>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <button
+            onClick={handleSendToUser}
+            className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-xl transition-colors"
+          >
+            <Send className="w-5 h-5" />
+            Receber no Meu WhatsApp
+          </button>
+          <button
+            onClick={handleSendToAdmin}
+            className="flex items-center justify-center gap-2 bg-muted border border-border hover:border-primary/50 text-foreground font-bold py-4 px-6 rounded-xl transition-colors"
+          >
+            <Send className="w-5 h-5" />
+            Enviar para Tutor's Tech
+          </button>
+        </div>
+
+        <div className="pt-4">
+          <NeonButton onClick={handleSendBoth}>
+            <span className="flex items-center justify-center">
+              ENVIAR PARA AMBOS E FINALIZAR <Send className="ml-2 w-4 h-4" />
+            </span>
+          </NeonButton>
+        </div>
       </div>
     </div>
   );

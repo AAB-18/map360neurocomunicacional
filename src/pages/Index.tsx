@@ -3,7 +3,7 @@ import { Step1Form } from "@/components/Step1Form";
 import { Step2Info } from "@/components/Step2Info";
 import { Step3Test } from "@/components/Step3Test";
 import { Step4Result } from "@/components/Step4Result";
-import { FormData, CharismaType, RESULTS, CharismaResult } from "@/data/charismaData";
+import { FormData, CharismaType, RESULTS, CharismaResult, ProfileScores } from "@/data/charismaData";
 
 const Index = () => {
   const [step, setStep] = useState(1);
@@ -17,6 +17,7 @@ const Index = () => {
   });
   const [answers, setAnswers] = useState<Record<number, CharismaType>>({});
   const [finalResult, setFinalResult] = useState<CharismaResult | null>(null);
+  const [scores, setScores] = useState<ProfileScores>({ S: 0, R: 0, V: 0, P: 0 });
 
   const handleFormChange = (field: keyof FormData, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -27,10 +28,11 @@ const Index = () => {
   };
 
   const calculateResult = () => {
-    const counts: Record<CharismaType, number> = { S: 0, R: 0, V: 0, P: 0 };
+    const counts: ProfileScores = { S: 0, R: 0, V: 0, P: 0 };
     Object.values(answers).forEach((type) => {
       counts[type]++;
     });
+    setScores(counts);
     const winnerType = (Object.keys(counts) as CharismaType[]).reduce((a, b) =>
       counts[a] > counts[b] ? a : b
     );
@@ -51,6 +53,7 @@ const Index = () => {
     });
     setAnswers({});
     setFinalResult(null);
+    setScores({ S: 0, R: 0, V: 0, P: 0 });
     window.scrollTo(0, 0);
   };
 
@@ -88,7 +91,7 @@ const Index = () => {
         )}
 
         {step === 4 && finalResult && (
-          <Step4Result result={finalResult} formData={formData} onReset={resetApp} />
+          <Step4Result result={finalResult} formData={formData} scores={scores} onReset={resetApp} />
         )}
 
         <footer className="mt-12 text-center text-xs text-muted py-4">
