@@ -134,18 +134,8 @@ _www.tutorstech.com.br_`;
         </div>
       )}
 
-      {/* Header with Image */}
+      {/* Header */}
       <div className="text-center">
-        {personalityImage && (
-          <div className="mb-6">
-            <img 
-              src={personalityImage} 
-              alt={result.title}
-              className="w-48 h-48 mx-auto rounded-full border-4 border-primary shadow-lg shadow-primary/30"
-            />
-          </div>
-        )}
-
         <div className="inline-block p-4 rounded-full bg-muted border-2 border-primary neon-border-strong mb-4">
           <Brain size={48} className="text-primary" />
         </div>
@@ -269,7 +259,7 @@ _www.tutorstech.com.br_`;
           {result.famousExamples.map((example, index) => (
             <span 
               key={index} 
-              className="bg-primary/20 text-primary px-4 py-2 rounded-full text-sm font-medium border border-primary/30"
+              className="bg-background/50 text-foreground/90 px-4 py-2 rounded-full text-sm font-medium border border-border/50"
             >
               {example}
             </span>
