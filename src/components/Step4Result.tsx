@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Brain, Activity, Send, Lightbulb, Users, AlertTriangle, Target, Star, MessageCircle, Briefcase, Share2 } from "lucide-react";
+import { Brain, Activity, Send, Lightbulb, Users, AlertTriangle, Target, Star, MessageCircle, Briefcase } from "lucide-react";
 import { NeonButton } from "./NeonButton";
 import { ProfileRadarChart } from "./ProfileRadarChart";
 import { CharismaResult, FormData, ProfileScores } from "@/data/charismaData";
@@ -277,42 +277,16 @@ _www.tutorstech.com.br_`;
         </div>
       </div>
 
-      {/* WhatsApp Send Options */}
-      <div className="space-y-4 pt-6">
-        <div className="text-center">
-          <h4 className="text-primary font-bold text-lg mb-2">
-            <Share2 className="w-5 h-5 inline mr-2" />
-            Enviar Relatório Completo
-          </h4>
-          <p className="text-sm text-muted-foreground mb-6">
-            Envie seu relatório detalhado por WhatsApp
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <button
-            onClick={handleSendToUser}
-            className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-xl transition-colors"
-          >
-            <Send className="w-5 h-5" />
-            Receber no Meu WhatsApp
-          </button>
-          <button
-            onClick={handleSendToAdmin}
-            className="flex items-center justify-center gap-2 bg-muted border border-border hover:border-primary/50 text-foreground font-bold py-4 px-6 rounded-xl transition-colors"
-          >
-            <Send className="w-5 h-5" />
-            Enviar para Tutor's Tech
-          </button>
-        </div>
-
-        <div className="pt-4">
-          <NeonButton onClick={handleSendBoth}>
-            <span className="flex items-center justify-center">
-              ENVIAR PARA AMBOS E FINALIZAR <Send className="ml-2 w-4 h-4" />
-            </span>
-          </NeonButton>
-        </div>
+      {/* Botão Finalizar */}
+      <div className="pt-6">
+        <NeonButton onClick={handleSendBoth}>
+          <span className="flex items-center justify-center">
+            FINALIZAR TESTE <Send className="ml-2 w-4 h-4" />
+          </span>
+        </NeonButton>
+        <p className="text-center text-sm text-muted-foreground mt-3">
+          O relatório será enviado para você e para a Tutor's Tech
+        </p>
       </div>
     </div>
   );
