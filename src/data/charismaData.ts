@@ -173,6 +173,14 @@ export interface CharismaResult {
   challenges: string;
   developmentTips: string[];
   famousExamples: string[];
+  image: string;
+}
+
+export interface ProfileScores {
+  S: number;
+  R: number;
+  V: number;
+  P: number;
 }
 
 export const RESULTS: Record<CharismaType, CharismaResult> = {
@@ -197,7 +205,8 @@ export const RESULTS: Record<CharismaType, CharismaResult> = {
       "Equilibre empatia com assertividade",
       "Aprenda a dizer não com gentileza"
     ],
-    famousExamples: ["Oprah Winfrey", "Brené Brown", "Dalai Lama"]
+    famousExamples: ["Oprah Winfrey", "Brené Brown", "Dalai Lama"],
+    image: "carisma-sensivel"
   },
   'R': {
     title: "Carisma Neuroracional",
@@ -220,7 +229,8 @@ export const RESULTS: Record<CharismaType, CharismaResult> = {
       "Reserve tempo para small talk",
       "Mostre vulnerabilidade ocasionalmente"
     ],
-    famousExamples: ["Elon Musk", "Angela Merkel", "Bill Gates"]
+    famousExamples: ["Elon Musk", "Angela Merkel", "Bill Gates"],
+    image: "carisma-racional"
   },
   'V': {
     title: "Carisma Vibrante-Entusiasmado",
@@ -243,7 +253,8 @@ export const RESULTS: Record<CharismaType, CharismaResult> = {
       "Cultive profundidade em suas mensagens",
       "Pratique escuta ativa"
     ],
-    famousExamples: ["Tony Robbins", "Richard Branson", "Will Smith"]
+    famousExamples: ["Tony Robbins", "Richard Branson", "Will Smith"],
+    image: "carisma-vibrante"
   },
   'P': {
     title: "Carisma Sereno-Profundo",
@@ -266,7 +277,8 @@ export const RESULTS: Record<CharismaType, CharismaResult> = {
       "Compartilhe mais suas ideias proativamente",
       "Desenvolva networking ativo"
     ],
-    famousExamples: ["Keanu Reeves", "Barack Obama", "Morgan Freeman"]
+    famousExamples: ["Keanu Reeves", "Barack Obama", "Morgan Freeman"],
+    image: "carisma-sereno"
   }
 };
 
