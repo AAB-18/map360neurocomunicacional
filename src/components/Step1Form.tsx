@@ -21,10 +21,9 @@ export const Step1Form = ({ data, onChange, onNext }: Step1FormProps) => {
           alt="Tutor's Tech Logo" 
           className="w-[300px] h-[300px] mx-auto mb-6 object-contain"
         />
-        <h1 className="text-3xl md:text-4xl font-extrabold mb-2">
-          <span className="text-foreground">Qual é o seu Estilo de Carisma </span>
-          <span className="text-primary neon-text">Mapeamento Neurocomunicacional</span>
-          <span className="text-primary">?</span>
+        <h1 className="text-base font-extrabold mb-2">
+          <span className="text-foreground">Qual é o seu Estilo de Carisma? </span>
+          <span className="text-primary neon-text">MAP360 - NeuroComunicacional</span>
         </h1>
         <p className="text-muted-foreground mt-4">
           Descubra como seu cérebro influencia sua presença, impacto e poder de conexão.
