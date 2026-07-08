@@ -14,16 +14,194 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      access_tokens: {
+        Row: {
+          browser: string | null
+          created_at: string
+          created_by: string | null
+          device: string | null
+          expires_at: string
+          id: string
+          ip_address: string | null
+          notes: string | null
+          revoked_at: string | null
+          status: Database["public"]["Enums"]["token_status"]
+          token: string
+          used_at: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          browser?: string | null
+          created_at?: string
+          created_by?: string | null
+          device?: string | null
+          expires_at?: string
+          id?: string
+          ip_address?: string | null
+          notes?: string | null
+          revoked_at?: string | null
+          status?: Database["public"]["Enums"]["token_status"]
+          token: string
+          used_at?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          browser?: string | null
+          created_at?: string
+          created_by?: string | null
+          device?: string | null
+          expires_at?: string
+          id?: string
+          ip_address?: string | null
+          notes?: string | null
+          revoked_at?: string | null
+          status?: Database["public"]["Enums"]["token_status"]
+          token?: string
+          used_at?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      participants: {
+        Row: {
+          city: string | null
+          company: string | null
+          created_at: string
+          education: string
+          email: string
+          id: string
+          lgpd_accepted: boolean
+          name: string
+          profession: string
+          referral: string | null
+          role_position: string | null
+          state: string | null
+          token_id: string | null
+          whatsapp: string
+        }
+        Insert: {
+          city?: string | null
+          company?: string | null
+          created_at?: string
+          education: string
+          email: string
+          id?: string
+          lgpd_accepted?: boolean
+          name: string
+          profession: string
+          referral?: string | null
+          role_position?: string | null
+          state?: string | null
+          token_id?: string | null
+          whatsapp: string
+        }
+        Update: {
+          city?: string | null
+          company?: string | null
+          created_at?: string
+          education?: string
+          email?: string
+          id?: string
+          lgpd_accepted?: boolean
+          name?: string
+          profession?: string
+          referral?: string | null
+          role_position?: string | null
+          state?: string | null
+          token_id?: string | null
+          whatsapp?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "participants_token_id_fkey"
+            columns: ["token_id"]
+            isOneToOne: false
+            referencedRelation: "access_tokens"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      test_results: {
+        Row: {
+          answers: Json
+          completed_at: string
+          dominant_profile: string
+          id: string
+          participant_id: string
+          score_p: number
+          score_r: number
+          score_s: number
+          score_v: number
+        }
+        Insert: {
+          answers: Json
+          completed_at?: string
+          dominant_profile: string
+          id?: string
+          participant_id: string
+          score_p?: number
+          score_r?: number
+          score_s?: number
+          score_v?: number
+        }
+        Update: {
+          answers?: Json
+          completed_at?: string
+          dominant_profile?: string
+          id?: string
+          participant_id?: string
+          score_p?: number
+          score_r?: number
+          score_s?: number
+          score_v?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "test_results_participant_id_fkey"
+            columns: ["participant_id"]
+            isOneToOne: false
+            referencedRelation: "participants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      token_status: "active" | "used" | "expired" | "revoked"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +328,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      token_status: ["active", "used", "expired", "revoked"],
+    },
   },
 } as const
